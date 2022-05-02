@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/fa3685e359.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title><%= BOT.NAME %> - The Discord bot</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Page Content  -->
+      <div class="container-fluid" id="content">
+        &nbsp;
+        <div class="row">
+          <!--Overall information-->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                      BOT NAME
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%= BOT.NAME%></div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-robot fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      BOT STATUS
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%= Math.round(bot.ws.ping) %>ms
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-signal fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      BOT UPTIME
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%= BOT.UPTIME %>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fa-solid fa-clock fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                      COMMANDS RUN (ALL TIME)
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%= COMMANDUSAGE %>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-cogs fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        &nbsp;
+        <div class="row">
+          <div class="col-xl-6 col-md-6 col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Command Overview</h6>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="CommandUsage"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-md-6 col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Popular Commands</h6>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="PopularCommands"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        &nbsp
+        <div class="row">
+          <!--Overall information-->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                      Server Count
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%= BOT.GUILDCOUNT %></div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      SERVER GROWTH (TODAY)
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%= BOT.GUILDCOUNTTODAY %>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      USER COUNT
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%= BOT.USERCOUNT %>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-user fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                      USER GROWTH (TODAY)
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <% let users = 0%>
+                      <% for (const guild of [...bot.guilds.cache.values()]) { %>
+                        <% users += guild.members.cache.filter(m => m.joinedTimestamp >= new Date() - 86400000).size; %>
+                      <% } %>
+                      <%= users %>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        &nbsp;
+        <div class="row">
+          <div class="col-xl-6 col-md-6 col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Server overview</h6>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="ServerOverview"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-md-6 col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" data-target="#UserTab" type="button" role="tab" aria-controls="home" aria-selected="true">
+                      User overview
+                    </a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" data-target="#BotTab" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                      Users to bots
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active chart-area" id="UserTab" role="tabpanel" aria-labelledby="User-tab">
+                    <canvas id="UserOverview"></canvas>
+                  </div>
+                  <div class="tab-pane fade chart-area" id="BotTab" role="tabpanel" aria-labelledby="Bot-tab">
+                    <canvas id="UserToBot"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        &nbsp;
+        <div class="row">
+          <!--Overall information-->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                      MEMORY USAGE
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%= MEMORY.USAGE%> MB</div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      MEMORY LOAD
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%= (MEMORY.USAGE / MEMORY.MAX).toFixed(2) %> %
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-server fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      CPU LOAD
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%= CPU %>%
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-server fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                      NETWORK BANDWIDTH
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%= NETWORK%>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fa-solid fa-wifi fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        &nbsp;
+        <div class="row">
+          <div class="col-xl-6 col-md-6 col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Memory Usage</h6>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="MemoryUsage"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-md-6 col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" data-target="#CPUTAB" type="button" role="tab" aria-controls="home" aria-selected="true">
+                      CPU Usage
+                    </a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" data-target="#BandwidthTab" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                      Bandwidth Usage
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active chart-area" id="CPUTAB" role="tabpanel" aria-labelledby="CPU-tab">
+                    <canvas id="CPUUsage"></canvas>
+                  </div>
+                  <div class="tab-pane fade chart-area" id="BandwidthTab" role="tabpanel" aria-labelledby="Bandwidth-tab">
+                    <canvas id="BandwidthUsage"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+    new Chart(document.getElementById("CommandUsage"), {
+      type: 'line',
+      data: <%- JSON.stringify(GRAPHS.CommandUsage)%>,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById("PopularCommands"), {
+      type: 'bar',
+      data: <%- JSON.stringify(GRAPHS.PopularCommands)%>,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById("ServerOverview"), {
+      type: 'line',
+      data: <%- JSON.stringify(GRAPHS.ServerOverview)%>,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById("UserOverview"), {
+      type: 'line',
+      data: <%- JSON.stringify(GRAPHS.UserOverview)%>,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById("UserToBot"), {
+      type: 'pie',
+      data: <%- JSON.stringify(GRAPHS.UserToBot) %>,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                console.log(context)
+                return `${context.label}: ${context.formattedValue}%`
+              }
+            }
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById("MemoryUsage"), {
+      type: 'line',
+      data: <%- JSON.stringify(GRAPHS.MemoryUsage)%>,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById("CPUUsage"), {
+      type: 'line',
+      data: <%- JSON.stringify(GRAPHS.CPUUsage)%>,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById("BandwidthUsage"), {
+      type: 'line',
+      data: <%- JSON.stringify(GRAPHS.BandwidthUsage)%>,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+</html>
