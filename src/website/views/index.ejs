@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="2">
     <script src="/js/jquery.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
@@ -44,7 +45,7 @@
                       BOT STATUS
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      <%= Math.round(bot.ws.ping) %>ms
+                      <%= Math.round(BOT.PING) %>ms
                     </div>
                   </div>
                   <div class="col-auto">
@@ -187,11 +188,7 @@
                       USER GROWTH (TODAY)
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      <% let users = 0%>
-                      <% for (const guild of [...bot.guilds.cache.values()]) { %>
-                        <% users += guild.members.cache.filter(m => m.joinedTimestamp >= new Date() - 86400000).size; %>
-                      <% } %>
-                      <%= users %>
+                      <%= BOT.USERCOUNTTODAY %>
                     </div>
                   </div>
                   <div class="col-auto">
@@ -312,7 +309,7 @@
                       NETWORK BANDWIDTH
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      <%= NETWORK%>
+                      <%= NETWORK %>
                     </div>
                   </div>
                   <div class="col-auto">
@@ -463,7 +460,16 @@
       options: {
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+              callback: function(value = 0, index, ticks) {
+                if (value == 0) return '0 Bytes';
+            		const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            			i = Math.floor(Math.log(value) / Math.log(1024));
+
+            		return parseFloat((value / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
+              }
+            }
           }
         }
       }
